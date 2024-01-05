@@ -1,0 +1,20 @@
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        unordered_map<int,int>mp;
+        for(int i=0;i<nums.size();++i){
+            if(mp.find(target-nums[i])!= mp.end()) 
+            return {i,mp[target-nums[i]]};
+            mp[nums[i]]=i;
+        }
+        return {-1,-1};
+    }
+};
+/*
+x+y=target  => x=target-y
+-for each x , check compliment
+-as soon as we get the compliment we are returning the result 
+-map unordered  , each element processed (picked, checked complemtnt O(1))once => O(lenARR)=O(n)
+-O(n)
+Note => 2-pass soln exists where you first store in one iteration and check in another iteration 
+*/
