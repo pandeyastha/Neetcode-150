@@ -1,0 +1,70 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        if(!head||!head->next) return head;
+        ListNode* odd= head;
+        ListNode* oddCopy=head;  // red flag=> remeber to keep copy
+        ListNode* oddPrev=NULL;
+        ListNode* even =head->next;
+        ListNode* evenCopy=even;
+        while(1){
+            if(even){
+                oddPrev=odd;
+                odd->next=even->next;
+                odd=odd->next;
+            }
+            if(odd){
+                even->next=odd->next;
+                even=even->next;
+            }
+            if(!even){oddPrev=odd;break;}
+            if(!odd)break;
+        }
+        oddPrev->next=evenCopy;
+        return oddCopy;
+
+    }
+};
+/*
+-could it be empty?=>Yes
+-what range of numbers inside ? doesnt matter but data type fit=>fits int
+-length of link list?=>10^4
+
+conclusion-
+-first odd then even 
+-Take care of empty list
+-take care if single/2  node, return itself
+---
+1) if odd==NUL , oddPrev needed
+2)if even =NULL, oddPrev=odd ; break
+
+Brute Force-
+-2 arrays , if counter%2==0 even list added , else odd list added
+-make new LL ,empty odd list,then even array
+
+TC= O(nodes)+O(nodes)     SC=O(2*nodes)
+----------------------------------------------------------------------
+Better-
+--take 2 pointers odd & even 
+- keep copy of even start &  oddPrev
+-keep on swapping by changinf next pointers if odd& even exists
+-keep a check of NULL ,where needed
+-at end oddPrev, being last odd node , gets joined to evn Start node so 
+rearrange of list happens ,  INPUT DISTORTION , reorder takes place
+-- change oddPrev to odd, if no even neighbor,
+
+TC= O(nodes)  SC=O(1)
+
+
+
+*/
