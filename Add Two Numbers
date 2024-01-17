@@ -1,0 +1,73 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        //none empty so no check of null
+        ListNode* first=l1;
+        ListNode* second =l2;
+        ListNode* dummy =new ListNode();
+        ListNode* mover=dummy;
+        int carry=0;
+        while(first||second||carry){
+            int tempSum=0;
+            if(first){
+                tempSum+=first->val;
+                first=first->next;
+            }
+            if(second){
+                tempSum+=second->val;
+                second=second->next;
+            }
+            if(carry) tempSum+=carry;
+            carry=tempSum/10;
+            tempSum=tempSum%10;
+            ListNode* freshNode=new ListNode(tempSum);
+            mover->next=freshNode;
+            mover=mover->next;
+        }
+        return dummy->next;
+    }
+};
+
+/*
+- len cant be same
+-both non empty 
+-len max 100
+-no leading zeroes
+-carry if at end , then new node addendum
+
+TP
+-nos are reversed
+-carry goes to next node
+
+
+Brute-
+-var for carry 
+-store each node sol in array
+-make a new link list with nodes val as arr[index] val 
+-return new Link list
+
+TC-O(max(len1,len2))= SC=2*max(len1, len2) -arr+ linklist
+----------------------------------------------------------
+
+Better-
+-var for carry 
+-store each node sol in node, add it to fresh LL
+-keep carry updation until end
+-return new Link list
+TC-O(max(len1,len2))= SC=max(len1, len2) -linklist
+
+*/
+/* Dry Run
+l1=[9,9,9]                 1011
+l2=[1,1,0,1]                999  
+l3=[0,1,0,2]*/
